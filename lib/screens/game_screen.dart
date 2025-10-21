@@ -97,79 +97,37 @@ class GameScreen extends StatelessWidget {
           ),
           // Center: Yes/No Logo
           const YesNoLogo(size: 80),
-          // Right: Coins & Leaderboard Button
-          _buildCoinsAndLeaderboard(context),
+          // Right: Leaderboard Button
+          _buildLeaderboardButton(context),
         ],
       ),
     );
   }
 
-  /// Coins display and leaderboard button
-  Widget _buildCoinsAndLeaderboard(BuildContext context) {
-    return Consumer<UserProfileProvider>(
-      builder: (context, provider, child) {
-        final coins = provider.userProfile?.coins ?? 0;
-        
-        return Row(
-          children: [
-            // Coins display
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColors.backgroundDark2.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: AppColors.tertiaryGold.withOpacity(0.5),
-                  width: 1.5,
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.monetization_on,
-                    color: AppColors.tertiaryGold,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    '$coins',
-                    style: AppTextStyles.subtitle.copyWith(
-                      color: AppColors.tertiaryGold,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 8),
-            // Leaderboard button
-            GestureDetector(
-              onTap: () {
-                print('[DEBUG] Leaderboard button tapped');
-                Navigator.of(context).pushNamed(AppRoutes.leaderboard);
-              },
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundDark2.withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: AppColors.primaryCyan.withOpacity(0.5),
-                    width: 1.5,
-                  ),
-                ),
-                child: const Icon(
-                  Icons.leaderboard,
-                  color: AppColors.primaryCyan,
-                  size: 22,
-                ),
-              ),
-            ),
-          ],
-        );
+  /// Leaderboard button only
+  Widget _buildLeaderboardButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        print('[DEBUG] Leaderboard button tapped');
+        Navigator.of(context).pushNamed(AppRoutes.leaderboard);
       },
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: AppColors.backgroundDark2.withOpacity(0.8),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: AppColors.primaryCyan.withOpacity(0.5),
+            width: 1.5,
+          ),
+        ),
+        child: const Icon(
+          Icons.leaderboard,
+          color: AppColors.primaryCyan,
+          size: 22,
+        ),
+      ),
     );
   }
 

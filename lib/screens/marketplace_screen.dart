@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 import '../widgets/animated_background.dart';
+import '../controllers/user_controller.dart';
 
 /// Marketplace Screen - Store for cosmetics and consumables
 class MarketplaceScreen extends StatefulWidget {
@@ -35,11 +37,51 @@ class _MarketplaceScreenState extends State<MarketplaceScreen>
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          automaticallyImplyLeading: false, // Remove back arrow
           title: Text(
             'Marketplace',
             style: AppTextStyles.heading1.copyWith(fontSize: 24),
           ),
           centerTitle: true,
+          actions: [
+            // Coin indicator from Firebase user data
+            Consumer<UserController>(
+              builder: (context, userController, _) {
+                final coins = userController.currentUser?.coins ?? 0;
+                
+                return Container(
+                  margin: const EdgeInsets.only(right: 16, top: 8, bottom: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundDark2.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: AppColors.tertiaryGold.withOpacity(0.5),
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.monetization_on,
+                        color: AppColors.tertiaryGold,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        '$coins',
+                        style: AppTextStyles.subtitle.copyWith(
+                          color: AppColors.tertiaryGold,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
           bottom: TabBar(
             controller: _tabController,
             indicatorColor: AppColors.primaryCyan,
