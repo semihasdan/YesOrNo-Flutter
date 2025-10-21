@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612385880653",
+    "project_id": "yesorno-85a02",
+    "storage_bucket": "yesorno-85a02.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612385880653:android:8374b52c803282fbbffa04",
+        "android_client_info": {
+          "package_name": "com.example.yes_or_no"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAjHVrxzbJ8e6ot-7nURjMwLN3kjK5wi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

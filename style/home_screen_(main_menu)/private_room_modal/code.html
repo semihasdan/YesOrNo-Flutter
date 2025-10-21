@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Private Room Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#06f9f9",
+            "background-light": "#f5f8f8",
+            "background-dark": "#0f2323",
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+          keyframes: {
+            'glow-pulse': {
+              '0%, 100%': { boxShadow: '0 0 10px #06f9f9, 0 0 20px #06f9f9, 0 0 30px #06f9f9, 0 0 40px #06f9f9' },
+              '50%': { boxShadow: '0 0 20px #06f9f9, 0 0 30px #06f9f9, 0 0 40px #06f9f9, 0 0 50px #06f9f9, 0 0 60px #06f9f9' },
+            },
+            'fade-in-scale-up': {
+                '0%': { opacity: '0', transform: 'scale(0.95)' },
+                '100%': { opacity: '1', transform: 'scale(1)' },
+            },
+          },
+          animation: {
+            'glow-pulse': 'glow-pulse 2s infinite',
+            'fade-in-scale-up': 'fade-in-scale-up 0.3s ease-out forwards',
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full items-center justify-center bg-black/30 backdrop-blur-md">
+<div class="relative flex w-full max-w-sm flex-col rounded-xl bg-[#1A1A1A]/80 p-6 shadow-2xl animate-fade-in-scale-up mx-4">
+<button class="absolute top-4 right-4 text-[#9bbbbb] hover:text-white transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h1 class="text-white tracking-light text-center text-3xl font-bold leading-tight pb-2 pt-6 font-display">Private Room</h1>
+<p class="text-center text-sm text-[#9bbbbb] mb-8 font-display">Create a new private room or join an existing one.</p>
+<div class="flex flex-col gap-6">
+<div class="flex px-4 py-3 justify-center">
+<button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 bg-primary text-[#111818] text-base font-bold leading-normal tracking-[0.015em] animate-glow-pulse transition-transform transform active:scale-95">
+<span class="truncate font-display">Create Room</span>
+</button>
+</div>
+<div class="relative flex items-center justify-center">
+<hr class="w-full border-t border-[#273a3a]"/>
+<span class="absolute px-2 bg-[#1A1A1A] text-sm text-[#9bbbbb]">OR</span>
+</div>
+<div class="flex flex-col gap-4">
+<label class="flex flex-col min-w-40 flex-1">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-2 focus:ring-[#FF00FF] border-none bg-[#273a3a] h-14 placeholder:text-[#9bbbbb] p-4 text-base font-normal leading-normal font-display" placeholder="Enter Room Code" value=""/>
+</label>
+<div class="flex px-4 py-3 justify-center">
+<button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-5 flex-1 bg-[#FF00FF] text-white text-base font-bold leading-normal tracking-[0.015em] transition-transform transform active:scale-95">
+<span class="truncate font-display">Join</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

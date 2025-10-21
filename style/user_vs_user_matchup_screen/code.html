@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Matchup Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glow {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+    </style>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#13a4ec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101c22",
+              "electric-blue": "#00FFFF",
+              "fiery-orange": "#FF4500"
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center bg-background-dark overflow-hidden p-4">
+<div class="absolute inset-0 z-0">
+<div class="absolute left-0 top-0 h-full w-1/2" style="background-image: linear-gradient(to right, rgba(0, 255, 255, 0.1), rgba(0, 255, 255, 0));"></div>
+<div class="absolute right-0 top-0 h-full w-1/2" style="background-image: linear-gradient(to left, rgba(255, 69, 0, 0.1), rgba(255, 69, 0, 0));"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-px bg-white/20 glow"></div>
+</div>
+<div class="relative z-10 flex w-full max-w-4xl flex-col items-center">
+<div class="text-center mb-8">
+<p class="text-white text-lg font-normal leading-normal">50-Word Duel</p>
+<p class="text-gray-400 text-sm font-normal leading-normal">Science &amp; Tech</p>
+</div>
+<div class="flex w-full items-center justify-between">
+<div class="flex flex-col items-center text-center w-1/3">
+<div class="relative mb-4">
+<div class="w-32 h-32 rounded-full bg-center bg-cover border-4 border-electric-blue shadow-[0_0_15px_rgba(0,255,255,0.7)]" data-alt="Player 1 avatar with a sword icon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCKwLq4o3EeZtBUD3AZ25LeSrcYCNAm04okfq1HJ4xT-nqiXh0dLGCl_WjCDlYBSUu-UtApzTfBtHxKKTL51427vKaJt4jutLwtKvtNgI7X2CqpIiEmYMyw070gi8BXVHynGqt6v-cMLrutRX9APDYExuWsJmb5R9YDiI8lXXhFGXZHLcp4wfb3pUJc4ZjEt7g3EgMYZSC7TiXKxrJVaLGLcB0N9YSwcpRI0XNQiuZ8424w_l2NgZF6fF5l6T2lOEaMqkhQUFh5uYub");'></div>
+</div>
+<p class="text-white text-2xl font-bold tracking-tight">Player 1</p>
+<p class="text-gray-300">Level 12</p>
+<p class="text-gray-300">Win Rate: 60%</p>
+</div>
+<div class="text-white text-6xl font-bold glow">VS</div>
+<div class="flex flex-col items-center text-center w-1/3">
+<div class="relative mb-4">
+<div class="w-32 h-32 rounded-full bg-center bg-cover border-4 border-fiery-orange shadow-[0_0_15px_rgba(255,69,0,0.7)]" data-alt="Player 2 avatar with a shield icon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBW41VoW5apbizAxW1xG5FN-E_yuPUKC-B7fIWR1Demra7FezbVcE-UndeQbXU8XxQThOpAPWfKwjQT0FjwAc-CpREx8LJOBiYF_PLe_EJ0B4KIW5rGgwbL6FTTWaFpxFbDXwPRk3doS09gOZFPu_sYEm3icfT0BK-UjoWmXUkPAxzOywbuagpDdPLrWZyb9jfXIMrK0zdJszNepSAAqR6e2czq-x_GOqz6RxCZAtHjXfIV7kGtCy5FN74STEcx4HCFG9fyWMJQGwKW");'></div>
+</div>
+<p class="text-white text-2xl font-bold tracking-tight">Player 2</p>
+<p class="text-gray-300">Level 15</p>
+<p class="text-gray-300">Win Rate: 75%</p>
+</div>
+</div>
+<div class="mt-12 text-center w-full">
+<p class="text-gray-400 text-sm italic mb-4">Waiting for Player 2 to select their word...</p>
+<button class="bg-primary hover:bg-primary/80 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 shadow-[0_0_10px_rgba(19,164,236,0.5)]">
+                Select My Word
+            </button>
+</div>
+</div>
+</div>
+</body></html>

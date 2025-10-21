@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Yes or No - Main Menu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0df2f2",
+            "background-light": "#f5f8f8",
+            "background-dark": "#0A192F",
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "Noto Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+          boxShadow: {
+            'glow-teal': '0 0 15px 5px rgba(20, 255, 236, 0.4)',
+            'glow-magenta': '0 0 15px 5px rgba(217, 70, 239, 0.4)',
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+
+    .material-symbols-outlined.fill {
+      font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden group/design-root">
+<div class="flex-grow p-4 space-y-8">
+<!-- Profile Header -->
+<div class="flex p-4 @container">
+<div class="flex w-full flex-col gap-4 items-center">
+<div class="flex gap-4 flex-col items-center">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32 border-2 border-primary" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCmFmdfRSh0A9hqZLQbgX7hXv8dKy5CpfdyT-PviRxYxIRnn_iAl_krrqL2pZtM0KJSZQQbC3t7MMY-gWQTZGyptJvMbEnUfKvhlvlmFBtuxGaXC_Q1nJS_0NqWkpa-_03mpT4-wwvgBiIjXkQZJtMyXp01OlNufSE_xKvyoI3hmkpFw51VmN8NwZRM1oIGvnPUyLuvj8ZC_2pq_FddGRr7MVRXjbd-fh1sfNeNfFvkFWHPOANEHQYxRit3kdQ2hIqPe2kzKU4Rkoc6");'></div>
+<span class="absolute -bottom-2 -right-2 material-symbols-outlined text-yellow-400 text-5xl">military_tech</span>
+</div>
+<div class="flex flex-col items-center justify-center">
+<p class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">Player123</p>
+<p class="text-gray-400 text-base font-normal leading-normal text-center">Bronze Rank</p>
+</div>
+</div>
+</div>
+</div>
+<!-- XP Progress Bar -->
+<div class="flex flex-col gap-3 px-4">
+<div class="flex gap-6 justify-between">
+<p class="text-white text-base font-medium leading-normal">XP</p>
+<p class="text-gray-400 text-base font-normal leading-normal">1200 / 2000</p>
+</div>
+<div class="rounded-full bg-gray-800 h-2.5 relative overflow-hidden">
+<div class="h-full rounded-full bg-primary shadow-glow-teal" style="width: 60%;"></div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="p-4 space-y-6">
+<div class="bg-gradient-to-r from-[#14FFEC] to-[#0D9488] flex flex-col items-stretch justify-end rounded-xl pt-[132px] shadow-glow-teal cursor-pointer" data-alt="Quick Match (Ranked) button with teal gradient background">
+<div class="flex w-full items-end justify-between gap-4 p-4">
+<p class="text-white tracking-light text-2xl font-bold leading-tight flex-1">Quick Match (Ranked)</p>
+</div>
+</div>
+<div class="bg-[#D946EF] flex flex-col items-stretch justify-end rounded-xl pt-[132px] shadow-glow-magenta cursor-pointer" data-alt="Private Room button with magenta background">
+<div class="flex w-full items-end justify-between gap-4 p-4">
+<p class="text-white tracking-light text-2xl font-bold leading-tight flex-1">Private Room</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="sticky bottom-0 flex gap-2 border-t border-[#283939] bg-[#0A192F]/80 backdrop-blur-sm px-4 pb-3 pt-2 mt-auto">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gray-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">emoji_events</span>
+<span class="text-xs">Leaderboard</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill text-2xl">person</span>
+<span class="text-xs">Profile</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gray-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">shopping_cart</span>
+<span class="text-xs">Store</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gray-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<span class="text-xs">Settings</span>
+</a>
+</div>
+</div>
+</body></html>

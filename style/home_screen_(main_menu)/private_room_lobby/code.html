@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Game Lobby</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13a4ec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101c22",
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          animation: {
+            'glow': 'glow 2s ease-in-out infinite',
+            'pulse-subtle': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            glow: {
+              '0%, 100%': {
+                textShadow: '0 0 5px #13a4ec, 0 0 10px #13a4ec, 0 0 15px #13a4ec'
+              },
+              '50%': {
+                textShadow: '0 0 10px #13a4ec, 0 0 20px #13a4ec, 0 0 30px #13a4ec'
+              },
+            },
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display">
+<div class="relative flex h-screen w-full flex-col dark group/design-root overflow-x-hidden" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+<div class="flex items-center bg-transparent p-4 pb-2 justify-between">
+<div class="text-white flex size-12 shrink-0 items-center justify-start" data-icon="ArrowLeft" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined text-3xl">arrow_back</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Private Lobby</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<div class="text-white" data-icon="Gear" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined text-3xl">settings</span>
+</div>
+</button>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center flex-grow p-4">
+<h1 class="text-primary tracking-light text-4xl font-bold leading-tight px-4 text-center pb-3 pt-6 animate-glow">Room Code: KRTN5</h1>
+<div class="flex px-4 py-3 justify-center">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 text-primary gap-2 pl-4 text-sm font-bold leading-normal tracking-[0.015em]">
+<div class="text-primary" data-icon="Share" data-size="20px" data-weight="regular">
+<span class="material-symbols-outlined">share</span>
+</div>
+<span class="truncate">Copy Code &amp; Share</span>
+</button>
+</div>
+<div class="w-full max-w-md mt-10 space-y-6">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-20 w-20 ring-2 ring-primary" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA3fJBp3vQhFCEpgfK0t7a6nVcb_1cd3VRZzNNBieMHP7xvD_9zqkcTy7BCK5c3l5e-FHzlCzBr-9YzTEAIhOFqy27u7dlsWbANbtQNFtOdEwv9O7DBi0yf0auEQtfWKXP3mfPQE0N80MGRCPUYsWzhOU6t4oMViRFX2tbdMOn0bmoOxy8YUMvJb0z7BQbg6AMj1vdAL0cpcziQzAWWNW-tuYPN7ea81T0FMfYVHxzqUWX4Kut_Y8xVH3xUrfRTbo-olCeVlqoc6p0m");'></div>
+<p class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">Username</p>
+</div>
+<div class="flex items-center gap-4 opacity-50 animate-pulse-subtle">
+<div class="bg-slate-700/50 aspect-square rounded-full h-20 w-20 border-2 border-dashed border-slate-500 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-slate-400">person_add</span>
+</div>
+<p class="text-slate-400 text-xl font-bold leading-tight tracking-[-0.015em]">Waiting for opponent...</p>
+</div>
+</div>
+</div>
+<div class="px-4 py-6">
+<button class="flex w-full cursor-not-allowed items-center justify-center overflow-hidden rounded-xl h-14 px-6 bg-slate-700 text-slate-500 text-lg font-bold leading-normal tracking-[0.015em]" disabled="">
+<span>Start Game</span>
+</button>
+</div>
+</div>
+</body></html>

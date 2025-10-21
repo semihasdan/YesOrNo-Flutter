@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Word Duel - Game Over</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00FFFF",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#0D1B2A",
+                        "player1-accent": "#00FFFF",
+                        "player2-accent": "#FF4500",
+                        "ai-yes": "#39FF14",
+                        "ai-no": "#FF1B1C",
+                        "neutral-text": "#EAEAEA"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'gold-glow': '0 0 15px 5px rgba(255, 215, 0, 0.4), 0 0 5px 2px rgba(255, 223, 0, 0.6)',
+                        'cyan-glow': '0 0 15px 3px rgba(0, 255, 255, 0.4)'
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-neutral-text">
+<div class="relative flex h-screen w-full flex-col">
+<div class="flex-1 flex flex-col blur-md">
+<header class="bg-[#1A1A1A]/50 backdrop-blur-sm sticky top-0 z-10 px-4 pt-4 pb-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1 text-neutral-text text-sm">
+<span class="material-symbols-outlined text-base">arrow_back_ios</span>
+<span>Exit</span>
+</div>
+<h1 class="text-xl font-bold">Word Duel</h1>
+<div class="w-16"></div>
+</div>
+<div class="flex justify-around items-end mt-4">
+<div class="flex flex-col items-center gap-2 border-b-4 border-player1-accent pb-2">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-20 h-20 border-2 border-player1-accent" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAARVsZYAOlWLLxq8I5Li9IlXSBJ879XG7LTTVNiuvqOTiXDb8u8uOSzHwBZWBojSprepGuR2vXNlYieACvPwJLAcvPmMG4-lucjkuhJ7Xe_NmURXAKFAWkXdXP5X0QO9qzwb0UPazDNRvsQF1dgU-TLbY3b_-hPwpZKNad6okxYhV4L0XPUQSJQsBtTo0ar_U3EPFa-Xt_NlxjP2b_Ms0W7a1MimWmNFXfouoRFQZLz4YTNW-0X4fH1g1wOPa2dum4btsUBiPLtQfm");'></div>
+</div>
+<p class="text-base font-bold text-neutral-text">Player 1</p>
+<p class="text-sm text-neutral-text/80">Guesses Left: 0</p>
+</div>
+<div class="flex flex-col items-center gap-2 pb-2 border-b-4 border-transparent">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-20 h-20 border-2 border-player2-accent" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDkybjYwdXY3hlgF0D2Bk5znZtPZTbvIDRC2K3LQ2si5ss-nNH7CoinbVjLX8ufUbZQUGwkHlD6F5l4ZylufEJJUaM3Abp-DOpZDPVQwMBrvVw3uqdS1HcN6XCV4jdkQMVneStU5Sd1f4dm3726LvRFU8-IkJRsr_CV3EKZCrDa03N-mrmRcvd4CllhSilc_ijr_z-MfxkWY5ISzS8reVvBJiH7Gykn1nZclKuEnf6WiTVXmUBri8VMP7LCtNGqoxVZ0qjDiIib3hmm");'></div>
+</div>
+<p class="text-base font-bold text-neutral-text">Player 2</p>
+<p class="text-sm text-neutral-text/80">Guesses Left: 1</p>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-4 space-y-6">
+<div class="flex items-end gap-3 justify-start">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10 shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAUx1fXAtlN5lut0g0kvhRdSlaOmU0Q4IscnefdJO8qEz7-iXOHRi1jB_mIh61Oud2dvTQXxbZdcjGgzEvgLpga2GvVENAGwc1O1Du4d9xhzTQzQmnm1djBgpVSodnG4JKAZi9aNuji6-Pc1hnncEItkuerQoeR4nuvzagLU-d5FhGlTRSGoQD1EFvr7Wt33ICbWbHhEqsL0-BYUdLb6QEBnF2V17Hi-UR3QFZaszHPEhk0Eh0XTynGUJIS2cc85HFK_huS2sIKtqbv");'></div>
+<div class="flex flex-col gap-1 items-start">
+<p class="text-neutral-text/70 text-xs">Player 2</p>
+<p class="text-base font-normal leading-normal flex max-w-xs rounded-lg px-4 py-3 bg-[#FF4500] text-white">Is it a movie?</p>
+</div>
+</div>
+<div class="flex items-end gap-3 justify-center">
+<div class="flex flex-col gap-1 items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-ai-yes">smart_toy</span>
+<p class="text-neutral-text/70 text-xs">AI Referee</p>
+</div>
+<p class="text-base font-bold leading-normal flex max-w-xs rounded-lg px-6 py-2 bg-[#39FF14]/20 text-[#39FF14] border border-[#39FF14]/50">YES</p>
+</div>
+</div>
+</main>
+</div>
+<div class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-20">
+<div class="bg-[#1C1C2E] border border-neutral-text/10 rounded-2xl w-full max-w-sm p-8 flex flex-col items-center gap-6 shadow-2xl text-center">
+<h2 class="text-5xl font-bold text-[#FFD700] text-shadow-lg" style="text-shadow: 0 0 15px rgba(255,215,0,0.7), 0 0 5px rgba(255,223,0,0.8)">YOU WIN!</h2>
+<div class="w-full">
+<p class="text-neutral-text/60 text-sm">The secret word was:</p>
+<p class="text-3xl font-bold tracking-[0.2em] mt-1">INCEPTION</p>
+</div>
+<div class="w-full flex flex-col items-center gap-3">
+<div class="flex items-center gap-2">
+<p class="text-lg font-bold text-ai-yes">+25 Points</p>
+</div>
+<div class="w-full bg-black/30 rounded-full h-3">
+<div class="bg-gradient-to-r from-green-400 to-ai-yes h-3 rounded-full relative" style="width: 80%">
+<div class="absolute -right-1 -top-1 h-5 w-5 bg-white rounded-full border-2 border-ai-yes"></div>
+</div>
+</div>
+</div>
+<div class="w-full flex flex-col gap-3 pt-4">
+<button class="w-full flex items-center justify-center rounded-lg h-14 px-6 bg-primary text-background-dark text-lg font-bold hover:brightness-110 transition-all shadow-cyan-glow">
+                    Play Again
+                </button>
+<button class="w-full flex items-center justify-center rounded-lg h-14 px-6 bg-transparent text-neutral-text text-base font-bold border-2 border-neutral-text/30 hover:bg-neutral-text/10 transition-colors">
+                    Back to Menu
+                </button>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

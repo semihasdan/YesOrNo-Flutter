@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Yes or No Game - High Stakes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00FFFF",
+                        "background-dark": "#0D0B1A",
+                        "indigo": "#1A152E",
+                        "obsidian": "#0A0814",
+                        "yes": "#00FF7F",
+                        "no": "#FF4136",
+                        "guess": "#FFD700",
+                        "cyan": "#00FFFF",
+                        "warning-yellow": "#FFD700",
+                        "critical-red": "#FF4136",
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        digital: ['Orbitron', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        "lg": "0.5rem",
+                    },
+                    boxShadow: {
+                        'glow-emerald': '0 0 15px 3px rgba(0, 255, 127, 0.6)',
+                        'glow-crimson': '0 0 15px 3px rgba(255, 65, 54, 0.6)',
+                        'glow-cyan': '0 0 15px 3px rgba(0, 255, 255, 0.6)',
+                        'glow-gold': '0 0 15px 3px rgba(255, 215, 0, 0.6)',
+                        'glow-cyan-ring': '0 0 20px 5px rgba(0, 255, 255, 0.4)',
+                        'glow-yellow-ring': '0 0 20px 5px rgba(255, 215, 0, 0.4)',
+                        'glow-red-ring': '0 0 20px 5px rgba(255, 65, 54, 0.4)',
+                    },
+                    keyframes: {
+                        'digital-rain': {
+                            '0%': { transform: 'translateY(-100%)', opacity: '0' },
+                            '50%': { opacity: '1' },
+                            '100%': { transform: 'translateY(100%)', opacity: '0' },
+                        },
+                        'drift': {
+                            '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
+                            '25%': { transform: 'translate(10px, -15px) rotate(5deg)' },
+                            '50%': { transform: 'translate(-5px, 10px) rotate(-3deg)' },
+                            '75%': { transform: 'translate(15px, 5px) rotate(2deg)' },
+                        },
+                         'pulse-cyan': {
+                            '0%, 100%': { boxShadow: '0 0 20px 5px rgba(0, 255, 255, 0.4)' },
+                            '50%': { boxShadow: '0 0 30px 10px rgba(0, 255, 255, 0.6)' },
+                        },
+                         'pulse-yellow': {
+                            '0%, 100%': { boxShadow: '0 0 20px 5px rgba(255, 215, 0, 0.4)' },
+                            '50%': { boxShadow: '0 0 30px 10px rgba(255, 215, 0, 0.6)' },
+                        },
+                         'pulse-red': {
+                            '0%, 100%': { boxShadow: '0 0 20px 5px rgba(255, 65, 54, 0.4)' },
+                            '50%': { boxShadow: '0 0 30px 10px rgba(255, 65, 54, 0.6)' },
+                        },
+                        'glitch': {
+                            '0%, 100%': { transform: 'skewX(0)', opacity: 1 },
+                            '48%': { transform: 'skewX(0)', opacity: 1 },
+                            '49%': { transform: 'skewX(10deg)', opacity: 0.8 },
+                            '50%': { transform: 'skewX(-10deg)', opacity: 0.8 },
+                            '51%': { transform: 'skewX(0)', opacity: 1 },
+                        },
+                        'tick-down': {
+                           '0%': { transform: 'translateY(0)', opacity: 1 },
+                           '50%': { transform: 'translateY(-10px)', opacity: 0 },
+                           '51%': { transform: 'translateY(10px)', opacity: 0 },
+                           '100%': { transform: 'translateY(0)', opacity: 1 },
+                        }
+                    },
+                    animation: {
+                        'digital-rain': 'digital-rain 15s linear infinite',
+                        'drift': 'drift 20s ease-in-out infinite alternate',
+                        'pulse-cyan': 'pulse-cyan 2s infinite',
+                        'pulse-yellow': 'pulse-yellow 2s infinite',
+                        'pulse-red': 'pulse-red 2s infinite',
+                        'glitch': 'glitch 1.5s infinite steps(1, end)',
+                        'tick-down': 'tick-down 0.5s ease-in-out'
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glassmorphism {
+            background: rgba(10, 8, 20, 0.5);backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        .timer-progress {
+            stroke-dasharray: 283;
+            stroke-dashoffset: 28.3;transition: stroke-dashoffset 1s linear, stroke 0.5s ease-in-out;
+        }
+        .timer-glow-cyan {
+            --glow-color: rgba(0, 255, 255, 0.6);
+             filter: drop-shadow(0 0 10px var(--glow-color));
+             stroke: #00FFFF;
+        }
+        .timer-glow-yellow {
+             --glow-color: rgba(255, 215, 0, 0.6);
+             filter: drop-shadow(0 0 10px var(--glow-color));
+             stroke: #FFD700;
+        }
+        .timer-glow-red {
+            --glow-color: rgba(255, 65, 54, 0.6);
+            filter: drop-shadow(0 0 10px var(--glow-color));
+            stroke: #FF4136;
+        }.ambient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: linear-gradient(to bottom, var(--tw-color-indigo), var(--tw-color-obsidian));
+            z-index: -1;
+        }
+        .particle {
+            position: absolute;
+            background-color: rgba(0, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: drift 20s ease-in-out infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-sans text-white">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<div class="ambient-bg">
+<div class="particle h-20 w-20 top-[10%] left-[20%]" style="animation-duration: 25s;"></div>
+<div class="particle h-12 w-12 top-[50%] left-[80%]" style="animation-duration: 18s;"></div>
+<div class="particle h-16 w-16 top-[80%] left-[10%]" style="animation-duration: 22s;"></div>
+<div class="particle h-24 w-24 top-[30%] left-[50%]" style="animation-duration: 30s;"></div>
+</div>
+<div class="p-4 text-center glassmorphism shadow-lg z-10">
+<p class="text-xl font-bold tracking-widest text-white animate-tick-down">BOUNTY: <span class="text-cyan font-digital">100 PTS</span></p>
+</div>
+<div class="flex-1 flex flex-col">
+<div class="flex-1 flex flex-col-reverse p-4">
+<div class="flex items-center gap-3 mt-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 border-2 border-cyan" data-alt="Avatar of Player 1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8nNXYCxpww2-3esbUWj6jf7XFXSs2Bsg956jddhJFOi7r5xhdbAB7pIeelAOYxUNRyfNETvntzc-oLGsmN4YWiIu7SnlPCBYRZq1bR0X9JWWnek-cPt-8TVKPJ6SHhOPapxpI1181rA0PKegYu7xww3KTYd-fRaok1uCX3VOmqd1sfR5XQH1eYWZH1eyJM5ICZyGa8pQxtRBNUpE5d81nNzsjFW8CpvyU3yMqto4c_v3OV7tLeVhq_fa-kENLNdZu8-2pc8AbLrQY");'></div>
+<p class="text-white text-lg font-bold">Player 1</p>
+</div>
+<div class="flex-1 overflow-y-auto space-y-3 pt-4">
+<div class="glassmorphism rounded-lg px-4 py-3 shadow-glow-emerald border border-yes">
+<p class="text-white">Is the main character a human?</p>
+</div>
+<div class="glassmorphism rounded-lg px-4 py-3 shadow-glow-crimson border border-no">
+<p class="text-white">Is it a comedy?</p>
+</div>
+</div>
+</div>
+<div class="relative flex items-center justify-center py-2 z-10">
+<div class="absolute w-full h-px bg-cyan/30"></div>
+<div class="relative w-28 h-28">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="stroke-cyan/20" cx="50%" cy="50%" fill="transparent" r="45%" stroke-width="2"></circle>
+<circle class="timer-progress timer-glow-cyan" cx="50%" cy="50%" fill="transparent" r="45%" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center font-digital text-4xl text-cyan animate-glitch">10</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col p-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 border-2 border-gray-600" data-alt="Avatar of Opponent" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB1I_IO01GvD0S1HxpIzSNY1JkJo1JfpziHZ_-tsO2ViVK1ONuie55cYNPqZtEwVly--9JubxD-afkTVr0C0l3ByxpejUDHmaw5klXABf9dCwtZ7r6OFPEckWjwYnJF4DJDQdXXFMg1kZYH2qQB281W8wNEmm9eghb1MyRkojmxVQFtxn4d0j8mAQCtjLdLttyIf6tIgKNt8k7RFRJEnvkNupyBhjEJ8ZGJ7le8brdvxzu-7MLiMt_x4oruo2ykSUNZNUJSyQuqhCHJ");'></div>
+<p class="text-gray-400 text-lg font-bold">Opponent</p>
+</div>
+<div class="flex-1 overflow-y-auto space-y-3">
+<div class="glassmorphism rounded-lg px-4 py-3 shadow-glow-crimson border border-no">
+<p class="text-white">Does the movie feature magic?</p>
+</div>
+<div class="glassmorphism rounded-lg px-4 py-3 shadow-glow-emerald border border-yes">
+<p class="text-white">Is it a superhero movie?</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 glassmorphism border-t border-cyan/20 z-10">
+<div class="flex items-center gap-3">
+<div class="flex-1 relative">
+<input class="w-full bg-indigo/50 text-white placeholder-gray-400 border border-cyan/30 rounded-lg px-4 py-3 focus:ring-cyan focus:border-cyan" placeholder="Type your question..." type="text"/>
+</div>
+<button class="bg-cyan/90 text-background-dark font-bold rounded-lg px-5 py-3 shadow-glow-cyan">SUBMIT</button>
+</div>
+<button class="w-full bg-guess text-background-dark font-bold rounded-lg py-3 mt-3 shadow-glow-gold">MAKE GUESS</button>
+</div>
+</div>
+
+</body></html>
