@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cyber Deduction Intelligence Duel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#00FFFF",
+            "background-dark": "#0A0814",
+            "indigo": "#1A152E",
+            "obsidian": "#0D0B1A",
+            "yes": "#00FF7F",
+            "no": "#FF4136",
+            "guess": "#FFD700",
+            "cyan": "#00FFFF",
+            "warning-yellow": "#FFD700",
+            "critical-red": "#FF4136",
+          },
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            digital: ['Orbitron', 'sans-serif'],
+          },
+          borderRadius: {
+            "lg": "0.5rem",
+          },
+          boxShadow: {
+            'glow-yes': '0 0 10px 2px rgba(0, 255, 127, 0.5)',
+            'glow-no': '0 0 10px 2px rgba(255, 65, 54, 0.5)',
+            'glow-cyan': '0 0 15px 3px rgba(0, 255, 255, 0.6)',
+            'glow-gold': '0 0 15px 3px rgba(255, 215, 0, 0.6)',
+            'glow-red': '0 0 25px 8px rgba(255, 65, 54, 0.7)',
+            'glow-shield': '0 0 12px 2px rgba(0, 255, 255, 0.5)',
+            'glow-hint': '0 0 12px 2px rgba(255, 215, 0, 0.5)',
+          },
+          keyframes: {
+            'pulse-red': {
+              '0%, 100%': {
+                transform: 'scale(1)',
+                boxShadow: '0 0 25px 8px rgba(255, 65, 54, 0.7)'
+              },
+              '50%': {
+                transform: 'scale(1.05)',
+                boxShadow: '0 0 40px 15px rgba(255, 65, 54, 0.8)'
+              },
+            },
+            'glitch-static': {
+              '0%': {
+                transform: 'translate(0)',
+              },
+              '20%': {
+                transform: 'translate(-3px, 3px)',
+              },
+              '40%': {
+                transform: 'translate(-3px, -3px)',
+              },
+              '60%': {
+                transform: 'translate(3px, 3px)',
+              },
+              '80%': {
+                transform: 'translate(3px, -3px)',
+              },
+              'to': {
+                transform: 'translate(0)',
+              },
+            }
+          },
+          animation: {
+            'pulse-red': 'pulse-red 1s infinite ease-in-out',
+            'glitch-static': 'glitch-static 0.1s linear infinite',
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .glassmorphism {
+      background: rgba(13, 11, 26, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 255, 255, 0.1);
+    }
+    .border-gradient-yes {
+        border-image: linear-gradient(to right, #00FF7F, #00FFFF) 1;
+        border-width: 1px;
+        border-style: solid;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-sans text-white overflow-hidden">
+<div class="relative flex h-screen w-full flex-col p-4 space-y-3">
+<div class="glassmorphism p-3 rounded-lg">
+<div class="text-center">
+<div class="flex items-center justify-center">
+<div class="relative w-16 h-16 mr-4">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="stroke-current text-indigo" cx="50%" cy="50%" fill="transparent" r="45%" stroke-width="3"></circle>
+<circle class="timer-progress stroke-cyan transition-all duration-300" cx="50%" cy="50%" fill="transparent" id="timer-circle" r="45%" stroke-linecap="round" stroke-width="4" style="stroke-dasharray: 251.2; stroke-dashoffset: 0; filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.7));"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center font-digital text-3xl text-cyan transition-colors duration-300" id="timer-text">10</span>
+</div>
+<p class="text-sm font-bold tracking-wider text-white/80">ROUND 5 OF 10</p>
+</div>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-2 gap-3 overflow-hidden">
+<div class="glassmorphism rounded-lg p-3 flex flex-col">
+<div class="flex items-center mb-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-cyan shadow-glow-cyan" data-alt="Your Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8nNXYCxpww2-3esbUWj6jf7XFXSs2Bsg956jddhJFOi7r5xhdbAB7pIeelAOYxUNRyfNETvntzc-oLGsmN4YWiIu7SnlPCBYRZq1bR0X9JWWnek-cPt-8TVKPJ6SHhOPapxpI1181rA0PKegYu7xww3KTYd-fRaok1uCX3VOmqd1sfR5XQH1eYWZH1eyJM5ICZyGa8pQxtRBNUpE5d81nNzsjFW8CpvyU3yMqto4c_v3OV7tLeVhq_fa-kENLNdZu8-2pc8AbLrQY");'></div>
+<span class="ml-2 font-bold text-cyan">YOUR SIDE PANEL</span>
+</div>
+<div class="space-y-2 flex-1">
+<div class="bg-indigo/80 p-2 rounded-md border border-no">
+<p class="text-sm text-white">Is the main character an AI?</p>
+<div class="flex items-center justify-end mt-1">
+<div class="px-2 py-0.5 bg-no rounded-md shadow-glow-no">
+<p class="font-bold text-background-dark text-xs">NO</p>
+</div>
+</div>
+</div>
+<div class="bg-indigo/80 p-2 rounded-md border-gradient-yes">
+<p class="text-sm text-white">Does the story take place in the future?</p>
+<div class="flex items-center justify-end mt-1">
+<div class="px-2 py-0.5 bg-yes rounded-md shadow-glow-yes">
+<p class="font-bold text-background-dark text-xs">YES</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="glassmorphism rounded-lg p-3 flex flex-col relative overflow-hidden">
+<div class="flex items-center mb-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-gray-500" data-alt="Opponent's Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCyF30Kx_j8YsGpYE3XfKf5XTnviqqgW2DaKXQFF7mmWLIkn4c0rJTuqNOsNilv0wJrXJU8WNOrYfNA0yLHzoJFGGzBJiRL61VYyH3ooUe__PlA_77VpP8bpCOpeXkHhI2R-SYkOks16GMvL_Tm_YReDWWW0S41k0N-fG89d6nK86tleDY77S3ijnbcnpKOq_-GJId69oJqcEj2OhqLn6gxqpeUWTSVNU2hq578y53EdMgNokUOKktEF2-rjgQgySY0Pxvv-Q1pVtEr");'></div>
+<span class="ml-2 font-bold text-gray-400">OPPONENT'S SIDE PANEL</span>
+</div>
+<div class="space-y-2 flex-1">
+<div class="bg-indigo/80 p-2 rounded-md border border-no">
+<p class="text-sm text-gray-300">Is the setting a cyberpunk city?</p>
+<div class="flex items-center justify-end mt-1">
+<div class="px-2 py-0.5 bg-no rounded-md shadow-glow-no">
+<p class="font-bold text-background-dark text-xs">NO</p>
+</div>
+</div>
+</div>
+<div class="bg-indigo/80 p-2 rounded-md border-gradient-yes">
+<p class="text-sm text-gray-300">Is the protagonist a detective?</p>
+<div class="flex items-center justify-end mt-1">
+<div class="px-2 py-0.5 bg-yes rounded-md shadow-glow-yes">
+<p class="font-bold text-background-dark text-xs">YES</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="glassmorphism p-3 rounded-lg">
+<div class="relative flex items-center">
+<input class="w-full bg-indigo/50 text-white placeholder-gray-400 border border-cyan/30 rounded-lg pl-4 pr-16 py-3 focus:ring-cyan focus:border-cyan" placeholder="Ask a yes/no question..." type="text"/>
+<button class="absolute right-3 bg-cyan/90 text-background-dark font-bold rounded-md px-3 py-1.5 text-sm shadow-glow-cyan">SEND</button>
+</div>
+<div class="flex items-center gap-3 mt-3">
+<button class="flex-1 bg-guess text-background-dark font-bold rounded-lg py-2 shadow-glow-gold text-sm animate-pulse">MAKE FINAL GUESS</button>
+<button class="relative">
+<span class="material-symbols-outlined text-cyan text-3xl p-1 rounded-full shadow-glow-shield">shield</span>
+<span class="absolute -top-1 -right-1 bg-cyan text-background-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-background-dark">2</span>
+</button>
+<button class="relative">
+<span class="material-symbols-outlined text-warning-yellow text-3xl p-1 rounded-full shadow-glow-hint">lightbulb</span>
+<span class="absolute -top-1 -right-1 bg-warning-yellow text-background-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-background-dark">1</span>
+</button>
+<button>
+<span class="material-symbols-outlined text-gray-400 hover:text-cyan transition-colors text-3xl">mood</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    const timerText = document.getElementById('timer-text');
+    const timerCircle = document.getElementById('timer-circle');
+    let timeLeft = 10;
+    const timeLimit = 10;
+    const radius = timerCircle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    timerCircle.style.strokeDasharray = circumference;
+    const interval = setInterval(() => {
+      timeLeft--;
+      if (timeLeft >= 0) {
+        timerText.textContent = timeLeft;
+        const dashOffset = circumference - (timeLeft / timeLimit) * circumference;
+        timerCircle.style.strokeDashoffset = dashOffset;
+      }
+      if (timeLeft <= 3 && timeLeft > 0) {
+        timerCircle.classList.remove('stroke-cyan');
+        timerCircle.classList.add('stroke-critical-red');
+        timerCircle.style.filter = 'drop-shadow(0 0 15px rgba(255, 65, 54, 0.8))';
+        timerText.classList.remove('text-cyan');
+        timerText.classList.add('text-critical-red');
+        timerText.parentElement.classList.add('animate-pulse-red');
+      }
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        timerText.parentElement.classList.remove('animate-pulse-red');
+      }
+    }, 1000);
+  </script>
+</body></html>

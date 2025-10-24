@@ -22,6 +22,9 @@ class AppRoutes {
   /// Game room screen route
   static const String game = '/game';
   
+  /// Single player game screen route
+  static const String singlePlayer = '/single-player';
+  
   /// Leaderboard screen route
   static const String leaderboard = '/leaderboard';
   
@@ -30,6 +33,9 @@ class AppRoutes {
   
   /// Settings screen route
   static const String settings = '/settings';
+  
+  /// Frame showcase screen route (for testing)
+  static const String frameShowcase = '/frame-showcase';
   
   /// Initial route - ALWAYS start with splash for security verification
   static const String initial = splash;

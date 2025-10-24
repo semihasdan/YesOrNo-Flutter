@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:yes_or_no/core/theme/app_colors.dart';
 import 'package:yes_or_no/models/user_profile.dart';
-import 'package:yes_or_no/widgets/avatar_widget.dart';
+import 'package:yes_or_no/widgets/equippable_avatar_frame.dart';
 import 'package:yes_or_no/widgets/animated_background.dart';
 
 class LeaderboardScreen extends StatelessWidget {
@@ -28,10 +27,10 @@ class LeaderboardScreen extends StatelessWidget {
               leading: Text('#${index + 1}'),
               title: Row(
                 children: [
-                  AvatarWidget(
-                    imageUrl: user.avatar,
-                    size: AvatarSize.small,
-                    badge: user.rankIcon,
+                  EquippableAvatarFrame(
+                    avatarUrl: user.avatar,
+                    frameId: user.avatarFrame,
+                    radius: 24,
                   ),
                   const SizedBox(width: 16),
                   Text(user.username),

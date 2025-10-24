@@ -26,18 +26,20 @@ class ServiceLocator {
   
   /// Initialize all services
   Future<void> init() async {
-    // Initialize repositories
-    _userRepository = UserRepository();
+    // Initialize services first (AuthService needed by UserRepository)
+    _authService = AuthService();
+    await _authService.initialize();
+    
+    // Initialize repositories (UserRepository needs AuthService)
+    _userRepository = UserRepository(_authService);
     _gameRepository = GameRepository();
     
-    // Initialize services
-    _authService = AuthService();
+    // Initialize other services
     _userService = UserService(_userRepository, _authService);
     _gameService = GameService(_gameRepository);
     _navigationService = NavigationService();
     
-    // Initialize services
-    await _authService.initialize();
+    // Initialize remaining services
     await _userService.initialize();
     await _gameService.initialize();
   }

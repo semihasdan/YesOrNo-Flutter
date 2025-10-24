@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
-import '../widgets/avatar_frame_widget.dart';
+import '../widgets/equippable_avatar_frame.dart';
 
 /// Header widget displaying user avatar with frame for Home Screen
 /// Small, interactive widget that emphasizes equipped cosmetics
 class HomeHeaderAvatarWidget extends StatelessWidget {
   final String imageUrl;
-  final AvatarFrameStyle frameStyle;
+  final String frameId;
   final VoidCallback? onTap;
 
   const HomeHeaderAvatarWidget({
     Key? key,
     required this.imageUrl,
-    this.frameStyle = AvatarFrameStyle.basic,
+    this.frameId = 'basic',
     this.onTap,
   }) : super(key: key);
 
@@ -33,10 +33,10 @@ class HomeHeaderAvatarWidget extends StatelessWidget {
             ),
           ],
         ),
-        child: AvatarFrameWidget(
-          imageUrl: imageUrl,
-          size: 50,
-          frameStyle: frameStyle,
+        child: EquippableAvatarFrame(
+          avatarUrl: imageUrl,
+          frameId: frameId,
+          radius: 25,
         ),
       ),
     );
@@ -125,11 +125,6 @@ class HowToPlayDialog extends StatelessWidget {
                 Text(
                   'How to Play',
                   style: AppTextStyles.heading2,
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.close, color: AppColors.textSecondary),
-                  onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
             ),

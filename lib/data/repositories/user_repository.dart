@@ -2,12 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import '../../core/base/base_repository.dart';
 import '../../models/user_profile.dart';
+import '../../services/auth_service.dart';
 
 /// Repository for user data management
 /// Handles CRUD operations for user profiles using Cloud Firestore
 class UserRepository implements BaseRepository<UserProfile> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _collectionName = 'users';
+  final AuthService _authService;
+  
+  UserRepository(this._authService);
   
   /// Check if user profile exists in Firestore
   Future<bool> userExists(String userId) async {
@@ -94,11 +98,33 @@ class UserRepository implements BaseRepository<UserProfile> {
     }
   }
   
-  /// Get current logged-in user (returns mock for now, will integrate with auth)
+  /// Get current logged-in user from Firebase
   Future<UserProfile?> getCurrentUser() async {
-    // TODO: Integrate with AuthService to get current user ID
-    // For now, return mock user for backwards compatibility
-    return UserProfile.mock();
+    try {
+      // Get current user's UID from Firebase Auth
+      final String? userId = _authService.getCurrentUserId();
+      
+      if (userId == null) {
+        debugPrint('No authenticated user found');
+        return null;
+      }
+      
+      debugPrint('Fetching user profile for UID: $userId');
+      
+      // Fetch user profile from 'users' collection using UID
+      final userProfile = await getById(userId);
+      
+      if (userProfile == null) {
+        debugPrint('User profile not found in Firestore for UID: $userId');
+        return null;
+      }
+      
+      debugPrint('Successfully loaded user profile: ${userProfile.username}');
+      return userProfile;
+    } catch (e) {
+      debugPrint('Error fetching current user profile: $e');
+      return null;
+    }
   }
   
   /// Update user XP

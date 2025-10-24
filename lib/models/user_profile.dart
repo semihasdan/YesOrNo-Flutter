@@ -18,8 +18,11 @@ class UserProfile {
   final DateTime createTime; // Account creation timestamp
   final int totalPoints; // Total points earned
   final int gamesPlayed; // Total games played
+  final int gamesLosed;
+  final int streakCount;
   final String activeFrameId; // Currently active frame
   final Map<String, int> powerUps; // Power-ups inventory
+  final List<String> unlockedFrames; // List of unlocked frame IDs
 
   UserProfile({
     required this.userId,
@@ -38,9 +41,13 @@ class UserProfile {
     required this.createTime,
     this.totalPoints = 1000,
     this.gamesPlayed = 0,
+    this.gamesLosed = 0,
+    this.streakCount = 0,
     this.activeFrameId = 'default_frame',
     Map<String, int>? powerUps,
-  }) : powerUps = powerUps ?? {'mindShieldsCount': 0, 'hintRefillsCount': 3};
+    List<String>? unlockedFrames,
+  }) : powerUps = powerUps ?? {'mindShieldsCount': 0, 'hintRefillsCount': 3},
+       unlockedFrames = unlockedFrames ?? ['basic', 'default_frame'];
 
   /// Create a copy with modified fields
   UserProfile copyWith({
@@ -60,8 +67,11 @@ class UserProfile {
     DateTime? createTime,
     int? totalPoints,
     int? gamesPlayed,
+    int? gamesLosed,
+    int? streakCount,
     String? activeFrameId,
     Map<String, int>? powerUps,
+    List<String>? unlockedFrames,
   }) {
     return UserProfile(
       userId: userId ?? this.userId,
@@ -80,8 +90,11 @@ class UserProfile {
       createTime: createTime ?? this.createTime,
       totalPoints: totalPoints ?? this.totalPoints,
       gamesPlayed: gamesPlayed ?? this.gamesPlayed,
+      gamesLosed: gamesLosed ?? this.gamesLosed,
+      streakCount: streakCount ?? this.streakCount,
       activeFrameId: activeFrameId ?? this.activeFrameId,
       powerUps: powerUps ?? this.powerUps,
+      unlockedFrames: unlockedFrames ?? this.unlockedFrames,
     );
   }
 
@@ -104,8 +117,11 @@ class UserProfile {
       'createTime': createTime.toIso8601String(),
       'totalPoints': totalPoints,
       'gamesPlayed': gamesPlayed,
+      'gamesLosed': gamesLosed,
+      'streakCount': streakCount,
       'activeFrameId': activeFrameId,
       'powerUps': powerUps,
+      'unlockedFrames': unlockedFrames,
     };
   }
 
@@ -128,8 +144,11 @@ class UserProfile {
       'createTime': createTime.toIso8601String(),
       'totalPoints': totalPoints,
       'gamesPlayed': gamesPlayed,
+      'gamesLosed': gamesLosed,
+      'streakCount': streakCount,
       'activeFrameId': activeFrameId,
       'powerUps': powerUps,
+      'unlockedFrames': unlockedFrames,
     };
   }
 
@@ -152,8 +171,11 @@ class UserProfile {
       createTime: DateTime.parse(json['createTime'] as String),
       totalPoints: json['totalPoints'] as int? ?? 1000,
       gamesPlayed: json['gamesPlayed'] as int? ?? 0,
+      gamesLosed: json['gamesLosed'] as int? ?? 0,
+      streakCount: json['streakCount'] as int? ?? 0,
       activeFrameId: json['activeFrameId'] as String? ?? 'default_frame',
       powerUps: Map<String, int>.from(json['powerUps'] as Map? ?? {}),
+      unlockedFrames: List<String>.from(json['unlockedFrames'] as List? ?? ['basic', 'default_frame']),
     );
   }
 
@@ -176,8 +198,11 @@ class UserProfile {
       createTime: DateTime.parse(data['createTime'] as String),
       totalPoints: data['totalPoints'] as int? ?? 1000,
       gamesPlayed: data['gamesPlayed'] as int? ?? 0,
+      gamesLosed: data['gamesLosed'] as int? ?? 0,
+      streakCount: data['streakCount'] as int? ?? 0,
       activeFrameId: data['activeFrameId'] as String? ?? 'default_frame',
       powerUps: Map<String, int>.from(data['powerUps'] as Map? ?? {}),
+      unlockedFrames: List<String>.from(data['unlockedFrames'] as List? ?? ['basic', 'default_frame']),
     );
   }
 
@@ -206,11 +231,14 @@ class UserProfile {
       createTime: DateTime.now(),
       totalPoints: 1000,
       gamesPlayed: 0,
+      gamesLosed: 0,
+      streakCount: 0,
       activeFrameId: 'default_frame',
       powerUps: {
         'mindShieldsCount': 0,
         'hintRefillsCount': 3,
       },
+      unlockedFrames: ['basic', 'default_frame'],
     );
   }
 
@@ -224,16 +252,19 @@ class UserProfile {
     int xp = 250,
     int xpMax = 500,
     String avatarFrame = 'basic',
-    int coins = 1500,
+    int coins = 0,
     String? equippedBubbleSkin,
     String? equippedVictoryTaunt,
     int hintRefills = 2,
     String deviceId = 'mock_device_id',
     DateTime? createTime,
-    int totalPoints = 1000,
+    int totalPoints = 0,
     int gamesPlayed = 5,
+    int gamesLosed = 2,
+    int streakCount = 3,
     String activeFrameId = 'default_frame',
     Map<String, int>? powerUps,
+    List<String>? unlockedFrames,
   }) {
     return UserProfile(
       userId: userId,
@@ -252,8 +283,11 @@ class UserProfile {
       createTime: createTime ?? DateTime.now(),
       totalPoints: totalPoints,
       gamesPlayed: gamesPlayed,
+      gamesLosed: gamesLosed,
+      streakCount: streakCount,
       activeFrameId: activeFrameId,
       powerUps: powerUps ?? {'mindShieldsCount': 0, 'hintRefillsCount': 3},
+      unlockedFrames: unlockedFrames ?? ['basic', 'default_frame'],
     );
   }
 }

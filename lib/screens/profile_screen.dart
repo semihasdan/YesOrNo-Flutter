@@ -95,12 +95,11 @@ class ProfileScreen extends StatelessWidget {
                 );
               }
 
-              // Calculate statistics from user profile
-              // TODO: These should come from actual game data in the future
+              // Get statistics from user profile
               final gamesPlayed = userProfile.gamesPlayed;
-              final wins = (gamesPlayed * 0.6).round(); // Placeholder calculation
-              final losses = gamesPlayed - wins;
-              final currentStreak = 5; // Placeholder - should come from game data
+              final losses = userProfile.gamesLosed;
+              final wins = gamesPlayed - losses;
+              final currentStreak = userProfile.streakCount;
 
               return Column(
                 children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yes_or_no/models/user_profile.dart';
-import 'package:yes_or_no/widgets/avatar_widget.dart';
+import 'package:yes_or_no/widgets/equippable_avatar_frame.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 
@@ -41,12 +41,11 @@ class ProfileHeaderWidget extends StatelessWidget {
       padding: const EdgeInsets.all(24.0),
       child: Row(
         children: [
-          // Avatar with rank badge
-          AvatarWidget(
-            imageUrl: userProfile.avatar,
-            size: AvatarSize.large,
-            borderColor: AppColors.primaryCyan,
-            badge: userProfile.rankIcon,
+          // Avatar with equippable frame
+          EquippableAvatarFrame(
+            avatarUrl: userProfile.avatar,
+            frameId: userProfile.avatarFrame,
+            radius: 64.0,
           ),
           const SizedBox(width: 16),
           // Username and Rank

@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
 import '../core/routes/app_routes.dart';
 import '../models/user_profile.dart';
-import '../widgets/avatar_widget.dart';
+import '../widgets/equippable_avatar_frame.dart';
 import '../widgets/spinning_logo_loader.dart';
+import '../controllers/user_controller.dart';
 
 /// Matchmaking screen - Shows when players are matched
 /// Displays player profiles and transitions to game
@@ -21,7 +23,6 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
   
-  final UserProfile _player1 = UserProfile.mock(username: 'You');
   final UserProfile _player2 = UserProfile.mock(
     userId: 'opponent_123',
     username: 'Opponent',
@@ -207,57 +208,63 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
   }
 
   Widget _buildPlayersMatchup() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Player 1
-        Expanded(
-          child: _buildPlayerCard(
-            player: _player1,
-            borderColor: const Color(0xFF00FFFF), // Cyan
-            shadowColor: const Color(0xFF00FFFF),
-          ),
-        ),
+    return Consumer<UserController>(
+      builder: (context, userController, _) {
+        final player1 = userController.currentUser ?? UserProfile.mock(username: 'You');
+        
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Player 1
+            Expanded(
+              child: _buildPlayerCard(
+                player: player1,
+                borderColor: const Color(0xFF00FFFF), // Cyan
+                shadowColor: const Color(0xFF00FFFF),
+              ),
+            ),
 
-        // VS text
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: AnimatedBuilder(
-            animation: _pulseAnimation,
-            builder: (context, child) {
-              return Transform.scale(
-                scale: _pulseAnimation.value,
-                child: ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                    colors: [
-                      Color(0xFF00FFFF),
-                      Color(0xFFFF00FF),
-                    ],
-                  ).createShader(bounds),
-                  child: Text(
-                    'VS',
-                    style: AppTextStyles.heading1.copyWith(
-                      fontSize: 48,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
+            // VS text
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: AnimatedBuilder(
+                animation: _pulseAnimation,
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: _pulseAnimation.value,
+                    child: ShaderMask(
+                      shaderCallback: (bounds) => const LinearGradient(
+                        colors: [
+                          Color(0xFF00FFFF),
+                          Color(0xFFFF00FF),
+                        ],
+                      ).createShader(bounds),
+                      child: Text(
+                        'VS',
+                        style: AppTextStyles.heading1.copyWith(
+                          fontSize: 48,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+                  );
+                },
+              ),
+            ),
 
-        // Player 2
-        Expanded(
-          child: _buildPlayerCard(
-            player: _player2,
-            borderColor: const Color(0xFFFF00FF), // Orange/Red
-            shadowColor: const Color(0xFFFF00FF),
-          ),
-        ),
-      ],
+            // Player 2
+            Expanded(
+              child: _buildPlayerCard(
+                player: _player2,
+                borderColor: const Color(0xFFFF00FF), // Orange/Red
+                shadowColor: const Color(0xFFFF00FF),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -272,26 +279,10 @@ class _MatchmakingScreenState extends State<MatchmakingScreen>
         Container(
           width: 100,
           height: 100,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: borderColor,
-              width: 3,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: shadowColor.withOpacity(0.6),
-                blurRadius: 15,
-                spreadRadius: 3,
-              ),
-            ],
-          ),
-          child: ClipOval(
-            child: AvatarWidget(
-              imageUrl: player.avatar,
-              size: AvatarSize.large,
-              borderColor: Colors.transparent,
-            ),
+          child: EquippableAvatarFrame(
+            avatarUrl: player.avatar,
+            frameId: player.avatarFrame,
+            radius: 50,
           ),
         ),
 

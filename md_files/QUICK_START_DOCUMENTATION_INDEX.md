@@ -408,3 +408,30 @@ This documentation suite was designed to be:
 ---
 
 **Happy Coding! 🎉**
+
+
+1- home sayfasındaki logo diğer varlıklardan bağımsız olarak yatayda ekranın tam ortasında olmalı her zaman.
+2- home, match making ve game sayfalarında kullanıcı profil fotoğrafını gösterirken mevcut kullanıcının firebase verisini kullan .
+3- home sayfasına yeni buton ekle. 'Single Play' ve bu butona basıldığında yönlendirilecek sayfayı hazırla. bu sayfa game sayfasının benzeri olacak sadece tek oyunuculu olacak o şekilde tasarlanmalı.
+4- game sayfası ve yeni oluşturulacak single play game sayfasında arkaplan olarak animated_background.dart kullan.
+
+
+1- single play sayfasında tek box olmalı o da oyuncunun kendi box'ı. AI OPPONENT kısmını kaldır böyle birşey olmayacak.
+2- single play butonuna basıldığında CategoriesTr collection'undan random bir document seçilir ve bu document içinden random bir word seçilir. Seçilen kategorinin categoryName sayacın yanına yazdırılır kullanıcı make guess butonuna basınca input gelir kullanıcı inputa tahminini yazar tahmini ve seçilen random kelime eşleşiyorsa oyuncu kazanır eşleşmiyorsa kaybeder. geliştirme aşmasında olduğumuz için seçilen random kelimeyei log olarak yazdır.
+
+home sayfasınında tasarım iyleştirmeleri: scroll yapmadan herşey gözükecek şekilde yarla sayfayı. butonlarun topPadding veya marginini düşürebilirsin yani butonlar birazdaha yukarıda olabilir az ama çok değil. ayrıca butonları biraz küçültebilirsin.
+quick match butonu üstte olsun single play ortada.
+
+home sayfaso ve single play sayfasında bu tarz tasarım hatalarını gider ve tekrar olmaması için önlem al.
+
+---
+1- single play oyunu sayfasında send butonu her 1 round'da yani her 10 saniyede 1 kez kullanılabilir olmalı.
+2- Shield butonu kaldırılmalı.
+3- Hint butonuna basıldığında ekranın uygun bir bölgesinde Hint gösterilmei ve bu ipucu çok kısa veya uzun olablir kod ona göre hazırlanmalı.
+4- sen butonuna basılıp gönderilen textler @functions klasörü içinde görebileceğin firebace function'a gitmeli. const userPrompt = 
+            `Secret Category: ${category}.
+            Secret Word: ${targetWord}.
+            Question: "${question}"`;
+kategori ve seçilen kelimede bu function'a gönderililmeli burda ai'dan gelen 'YES' veya 'NO' cevabı alınıp kullanıcıya ona göre Yes veya No gösterilmeli. YES ve No cevabını doğrudan ai modelinden geldiği haliiyele kullanma ai cavabını kontrol et eğer 'YES' ise sende 'Yes' yazdır 'NO' ise sende 'No' yazdır.
+
+ai'a mesajı gönderdiğine ve aidan gelen cevabı kullandığına emin misin?

@@ -67,6 +67,49 @@ class UserProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Equip an avatar frame (must be unlocked first)
+  bool equipAvatarFrame(String frameId) {
+    if (_userProfile.unlockedFrames.contains(frameId)) {
+      _userProfile = _userProfile.copyWith(
+        avatarFrame: frameId,
+        activeFrameId: frameId,
+      );
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  /// Unlock a new frame (typically after purchase from Marketplace)
+  void unlockFrame(String frameId) {
+    if (!_userProfile.unlockedFrames.contains(frameId)) {
+      final updatedFrames = List<String>.from(_userProfile.unlockedFrames)
+        ..add(frameId);
+      _userProfile = _userProfile.copyWith(unlockedFrames: updatedFrames);
+      notifyListeners();
+    }
+  }
+
+  /// Purchase and unlock a frame (checks coins, deducts cost, unlocks frame)
+  bool purchaseFrame(String frameId, int cost) {
+    if (_userProfile.coins >= cost && !_userProfile.unlockedFrames.contains(frameId)) {
+      final updatedFrames = List<String>.from(_userProfile.unlockedFrames)
+        ..add(frameId);
+      _userProfile = _userProfile.copyWith(
+        coins: _userProfile.coins - cost,
+        unlockedFrames: updatedFrames,
+      );
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  /// Check if a frame is unlocked
+  bool isFrameUnlocked(String frameId) {
+    return _userProfile.unlockedFrames.contains(frameId);
+  }
+
   /// Update bubble skin
   void updateBubbleSkin(String? bubbleSkin) {
     _userProfile = _userProfile.copyWith(equippedBubbleSkin: bubbleSkin);

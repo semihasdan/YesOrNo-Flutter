@@ -1,1 +1,54 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"yesorno-85a02","appId":"1:612385880653:android:8374b52c803282fbbffa04","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"yesorno-85a02","appId":"1:612385880653:ios:6e29d6fcb87b62c2bffa04","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"yesorno-85a02","appId":"1:612385880653:ios:6e29d6fcb87b62c2bffa04","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"yesorno-85a02","configurations":{"android":"1:612385880653:android:8374b52c803282fbbffa04","ios":"1:612385880653:ios:6e29d6fcb87b62c2bffa04","macos":"1:612385880653:ios:6e29d6fcb87b62c2bffa04","web":"1:612385880653:web:1def8a195087715abffa04","windows":"1:612385880653:web:48105d84f96d47adbffa04"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "yesorno-85a02",
+          "appId": "1:612385880653:android:8374b52c803282fbbffa04",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "yesorno-85a02",
+          "appId": "1:612385880653:ios:6e29d6fcb87b62c2bffa04",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "yesorno-85a02",
+          "appId": "1:612385880653:ios:6e29d6fcb87b62c2bffa04",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "yesorno-85a02",
+          "configurations": {
+            "android": "1:612385880653:android:8374b52c803282fbbffa04",
+            "ios": "1:612385880653:ios:6e29d6fcb87b62c2bffa04",
+            "macos": "1:612385880653:ios:6e29d6fcb87b62c2bffa04",
+            "web": "1:612385880653:web:1def8a195087715abffa04",
+            "windows": "1:612385880653:web:48105d84f96d47adbffa04"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}

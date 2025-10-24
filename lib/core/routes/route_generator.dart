@@ -5,7 +5,9 @@ import '../../screens/home_screen.dart';
 import '../../screens/lobby_screen.dart';
 import '../../screens/matchmaking_screen.dart';
 import '../../screens/game_room_screen.dart';
+import '../../screens/single_player_game_screen.dart';
 import '../../screens/leaderboard_screen.dart';
+import '../../screens/frame_showcase_screen.dart';
 import '../../screens/placeholder_screens.dart' hide LeaderboardScreen;
 import 'app_routes.dart';
 
@@ -34,6 +36,9 @@ class RouteGenerator {
       case AppRoutes.game:
         return _buildRoute(const GameRoomScreen());
 
+      case AppRoutes.singlePlayer:
+        return _buildRoute(const SinglePlayerGameScreen());
+
       case AppRoutes.leaderboard:
         return _buildRoute(const LeaderboardScreen());
 
@@ -42,6 +47,9 @@ class RouteGenerator {
 
       case AppRoutes.settings:
         return _buildRoute(const SettingsScreen());
+
+      case AppRoutes.frameShowcase:
+        return _buildRoute(const FrameShowcaseScreen());
 
       default:
         return _buildRoute(

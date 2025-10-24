@@ -132,4 +132,106 @@ class UserController extends BaseController {
       setLoading(false);
     }
   }
+  
+  /// Equip avatar frame (must be unlocked first)
+  Future<bool> equipAvatarFrame(String frameId) async {
+    if (_currentUser == null) return false;
+    
+    // Check if frame is unlocked
+    if (!_currentUser!.unlockedFrames.contains(frameId)) {
+      setError('Frame is not unlocked');
+      return false;
+    }
+    
+    try {
+      final updatedUser = _currentUser!.copyWith(
+        avatarFrame: frameId,
+        activeFrameId: frameId,
+      );
+      
+      final result = await _userService.updateProfile(updatedUser);
+      
+      if (result.isSuccess) {
+        _currentUser = result.dataOrNull;
+        notifyListeners();
+        return true;
+      } else {
+        setError(result.errorOrNull);
+        return false;
+      }
+    } catch (e) {
+      setError('Failed to equip frame: $e');
+      return false;
+    }
+  }
+  
+  /// Purchase and unlock a frame
+  Future<bool> purchaseFrame(String frameId, int cost) async {
+    if (_currentUser == null) return false;
+    
+    // Check if user has enough coins
+    if (_currentUser!.coins < cost) {
+      setError('Not enough coins');
+      return false;
+    }
+    
+    // Check if already unlocked
+    if (_currentUser!.unlockedFrames.contains(frameId)) {
+      setError('Frame already unlocked');
+      return false;
+    }
+    
+    try {
+      final updatedFrames = List<String>.from(_currentUser!.unlockedFrames)..add(frameId);
+      final updatedUser = _currentUser!.copyWith(
+        coins: _currentUser!.coins - cost,
+        unlockedFrames: updatedFrames,
+      );
+      
+      final result = await _userService.updateProfile(updatedUser);
+      
+      if (result.isSuccess) {
+        _currentUser = result.dataOrNull;
+        notifyListeners();
+        return true;
+      } else {
+        setError(result.errorOrNull);
+        return false;
+      }
+    } catch (e) {
+      setError('Failed to purchase frame: $e');
+      return false;
+    }
+  }
+  
+  /// Check if a frame is unlocked
+  bool isFrameUnlocked(String frameId) {
+    if (_currentUser == null) return false;
+    return _currentUser!.unlockedFrames.contains(frameId);
+  }
+  
+  /// Add coins to user
+  Future<bool> addCoins(int amount) async {
+    if (_currentUser == null) return false;
+    
+    try {
+      final updatedUser = _currentUser!.copyWith(
+        coins: _currentUser!.coins + amount,
+      );
+      
+      final result = await _userService.updateProfile(updatedUser);
+      
+      if (result.isSuccess) {
+        _currentUser = result.dataOrNull;
+        notifyListeners();
+        return true;
+      } else {
+        setError(result.errorOrNull);
+        return false;
+      }
+    } catch (e) {
+      setError('Failed to add coins: $e');
+      return false;
+    }
+  }
 }

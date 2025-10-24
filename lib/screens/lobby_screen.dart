@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_text_styles.dart';
-import '../widgets/avatar_widget.dart';
+import '../widgets/equippable_avatar_frame.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/glass_container.dart';
 import '../models/user_profile.dart';
@@ -243,10 +243,10 @@ class _LobbyScreenState extends State<LobbyScreen> with SingleTickerProviderStat
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                AvatarWidget(
-                  imageUrl: _player1.avatar,
-                  size: AvatarSize.medium,
-                  borderColor: AppColors.primaryCyan,
+                EquippableAvatarFrame(
+                  avatarUrl: _player1.avatar,
+                  frameId: _player1.avatarFrame,
+                  radius: 40,
                 ),
                 const SizedBox(width: 16),
                 Column(

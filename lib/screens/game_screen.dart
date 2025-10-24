@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../core/theme/app_colors.dart';
@@ -9,11 +8,15 @@ import '../widgets/animated_background.dart';
 import '../widgets/yes_no_logo.dart';
 import '../widgets/home_header_widgets.dart';
 import '../widgets/daily_quest_widget.dart';
-import '../widgets/avatar_frame_widget.dart';
-import '../providers/user_profile_provider.dart';
+import '../controllers/user_controller.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({Key? key}) : super(key: key);
+
+  void _onSinglePlay(BuildContext context) {
+    print('[DEBUG] Single Play button pressed');
+    Navigator.of(context).pushNamed(AppRoutes.singlePlayer);
+  }
 
   void _onQuickMatch(BuildContext context) {
     print('[DEBUG] Quick Match button pressed');
@@ -53,52 +56,38 @@ class GameScreen extends StatelessWidget {
   Widget _buildTopHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          // Left: User Avatar with Frame (shows off marketplace cosmetics)
-          Consumer<UserProfileProvider>(
-            builder: (context, provider, child) {
-              final user = provider.userProfile;
-              if (user == null) return const SizedBox.shrink();
-              
-              // Parse avatar frame style from string
-              AvatarFrameStyle frameStyle = AvatarFrameStyle.basic;
-              switch (user.avatarFrame.toLowerCase()) {
-                case 'none':
-                  frameStyle = AvatarFrameStyle.none;
-                  break;
-                case 'basic':
-                  frameStyle = AvatarFrameStyle.basic;
-                  break;
-                case 'raptorrank':
-                  frameStyle = AvatarFrameStyle.raptorRank;
-                  break;
-                case 'neonglitch':
-                  frameStyle = AvatarFrameStyle.neonGlitch;
-                  break;
-                case 'holographic':
-                  frameStyle = AvatarFrameStyle.holographic;
-                  break;
-                case 'legendary':
-                  frameStyle = AvatarFrameStyle.legendary;
-                  break;
-              }
-              
-              return HomeHeaderAvatarWidget(
-                imageUrl: user.avatar,
-                frameStyle: frameStyle,
-                onTap: () {
-                  // Navigate to profile screen
-                  print('[DEBUG] Avatar tapped - Navigate to Profile');
-                },
-              );
-            },
+          // Left: User Avatar with Frame
+          Positioned(
+            left: 0,
+            child: Consumer<UserController>(
+              builder: (context, userController, child) {
+                final user = userController.currentUser;
+                if (user == null) return const SizedBox.shrink();
+                
+                return HomeHeaderAvatarWidget(
+                  imageUrl: user.avatar,
+                  frameId: user.avatarFrame,
+                  onTap: () {
+                    print('[DEBUG] Avatar tapped - Navigate to Profile');
+                  },
+                );
+              },
+            ),
           ),
-          // Center: Yes/No Logo
-          const YesNoLogo(size: 80),
+          
+          // Center: Yes/No Logo (always centered)
+          const Center(
+            child: YesNoLogo(size: 80),
+          ),
+          
           // Right: Leaderboard Button
-          _buildLeaderboardButton(context),
+          Positioned(
+            right: 0,
+            child: _buildLeaderboardButton(context),
+          ),
         ],
       ),
     );
@@ -136,12 +125,12 @@ class GameScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 40),
-          _buildActionButtons(context),
           const SizedBox(height: 16),
+          _buildActionButtons(context),
+          const SizedBox(height: 12),
           // "How to Play" Link
           const HowToPlayLink(),
-          const SizedBox(height: 32),
+          const SizedBox(height: 20),
           // Daily Quest Widget
           const DailyQuestWidget(
             questTitle: 'Daily Quest',
@@ -149,7 +138,25 @@ class GameScreen extends StatelessWidget {
             rewardCoins: 50,
             progress: 0.0,
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 16),
+          // Frame Showcase Button (for testing)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: TextButton.icon(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.frameShowcase);
+              },
+              icon: const Icon(Icons.palette, color: AppColors.secondaryMagenta),
+              label: Text(
+                'View Avatar Frame Gallery',
+                style: AppTextStyles.subtitle.copyWith(
+                  color: AppColors.secondaryMagenta,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
         ],
       ),
     );
@@ -160,8 +167,9 @@ class GameScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          // Quick Match Button
+          // Quick Match Button (moved to top)
           Container(
             decoration: BoxDecoration(
               gradient: const LinearGradient(
@@ -187,22 +195,23 @@ class GameScreen extends StatelessWidget {
                 onTap: () => _onQuickMatch(context),
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
-                  height: 132,
+                  height: 100,
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       const Icon(
                         Icons.flash_on,
-                        size: 48,
+                        size: 36,
                         color: Colors.white,
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 4),
                       Text(
                         'Quick Match',
                         style: AppTextStyles.buttonLarge.copyWith(
                           color: Colors.white,
-                          fontSize: 24,
+                          fontSize: 18,
                         ),
                       ),
                     ],
@@ -212,28 +221,83 @@ class GameScreen extends StatelessWidget {
             ),
           ),
           
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
           
-          // Private Room Button
+          // Single Play Button (moved to middle)
+          Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFFFFD700),
+                  Color(0xFFFFA500),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFFFD700).withOpacity(0.5),
+                  blurRadius: 20,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () => _onSinglePlay(context),
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  height: 100,
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.person,
+                        size: 36,
+                        color: Colors.black,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Single Play',
+                        style: AppTextStyles.buttonLarge.copyWith(
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 16),
+          
+          // Private Room Button (stays at bottom)
           CustomButton(
             variant: ButtonVariant.secondary,
             onPressed: () => _onPrivateRoom(context),
-            height: 132,
+            height: 100,
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
                   Icons.lock,
-                  size: 48,
+                  size: 36,
                   color: Colors.white,
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 Text(
                   'Private Room',
                   style: AppTextStyles.buttonLarge.copyWith(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 18,
                   ),
                 ),
               ],
