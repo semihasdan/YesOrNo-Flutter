@@ -7,11 +7,16 @@ class UserProfile {
   final String rankIcon;
   final int xp;
   final int xpMax;
-  final String avatarFrame; // Equipped avatar frame style
+  final String avatarFrame; // Equipped avatar frame style (legacy)
+  final String activeAvatarFrameId; // Currently active avatar frame ID
+  final String? activeVictoryTauntId; // Currently active victory taunt ID
   final int coins; // User's coin balance
   final String? equippedBubbleSkin; // Equipped question bubble skin
-  final String? equippedVictoryTaunt; // Equipped victory taunt/emote
+  final String? equippedVictoryTaunt; // Equipped victory taunt/emote (legacy)
   final int hintRefills; // Number of hint refills owned
+  
+  // User statistics
+  final UserStats stats;
   
   // Device tracking and session management
   final String deviceId; // Device unique identifier
@@ -33,6 +38,8 @@ class UserProfile {
     required this.xp,
     required this.xpMax,
     this.avatarFrame = 'basic',
+    this.activeAvatarFrameId = 'basic',
+    this.activeVictoryTauntId,
     this.coins = 0,
     this.equippedBubbleSkin,
     this.equippedVictoryTaunt,
@@ -46,8 +53,10 @@ class UserProfile {
     this.activeFrameId = 'default_frame',
     Map<String, int>? powerUps,
     List<String>? unlockedFrames,
+    UserStats? stats,
   }) : powerUps = powerUps ?? {'mindShieldsCount': 0, 'hintRefillsCount': 3},
-       unlockedFrames = unlockedFrames ?? ['basic', 'default_frame'];
+       unlockedFrames = unlockedFrames ?? ['basic', 'default_frame'],
+       stats = stats ?? UserStats.initial();
 
   /// Create a copy with modified fields
   UserProfile copyWith({
@@ -59,6 +68,8 @@ class UserProfile {
     int? xp,
     int? xpMax,
     String? avatarFrame,
+    String? activeAvatarFrameId,
+    String? activeVictoryTauntId,
     int? coins,
     String? equippedBubbleSkin,
     String? equippedVictoryTaunt,
@@ -72,6 +83,7 @@ class UserProfile {
     String? activeFrameId,
     Map<String, int>? powerUps,
     List<String>? unlockedFrames,
+    UserStats? stats,
   }) {
     return UserProfile(
       userId: userId ?? this.userId,
@@ -82,6 +94,8 @@ class UserProfile {
       xp: xp ?? this.xp,
       xpMax: xpMax ?? this.xpMax,
       avatarFrame: avatarFrame ?? this.avatarFrame,
+      activeAvatarFrameId: activeAvatarFrameId ?? this.activeAvatarFrameId,
+      activeVictoryTauntId: activeVictoryTauntId ?? this.activeVictoryTauntId,
       coins: coins ?? this.coins,
       equippedBubbleSkin: equippedBubbleSkin ?? this.equippedBubbleSkin,
       equippedVictoryTaunt: equippedVictoryTaunt ?? this.equippedVictoryTaunt,
@@ -95,6 +109,7 @@ class UserProfile {
       activeFrameId: activeFrameId ?? this.activeFrameId,
       powerUps: powerUps ?? this.powerUps,
       unlockedFrames: unlockedFrames ?? this.unlockedFrames,
+      stats: stats ?? this.stats,
     );
   }
 
@@ -109,6 +124,8 @@ class UserProfile {
       'xp': xp,
       'xpMax': xpMax,
       'avatarFrame': avatarFrame,
+      'activeAvatarFrameId': activeAvatarFrameId,
+      'activeVictoryTauntId': activeVictoryTauntId,
       'coins': coins,
       'equippedBubbleSkin': equippedBubbleSkin,
       'equippedVictoryTaunt': equippedVictoryTaunt,
@@ -122,6 +139,7 @@ class UserProfile {
       'activeFrameId': activeFrameId,
       'powerUps': powerUps,
       'unlockedFrames': unlockedFrames,
+      'stats': stats.toJson(),
     };
   }
 
@@ -136,6 +154,8 @@ class UserProfile {
       'xp': xp,
       'xpMax': xpMax,
       'avatarFrame': avatarFrame,
+      'activeAvatarFrameId': activeAvatarFrameId,
+      'activeVictoryTauntId': activeVictoryTauntId,
       'coins': coins,
       'equippedBubbleSkin': equippedBubbleSkin,
       'equippedVictoryTaunt': equippedVictoryTaunt,
@@ -149,6 +169,7 @@ class UserProfile {
       'activeFrameId': activeFrameId,
       'powerUps': powerUps,
       'unlockedFrames': unlockedFrames,
+      'stats': stats.toJson(),
     };
   }
 
@@ -163,6 +184,8 @@ class UserProfile {
       xp: json['xp'] as int,
       xpMax: json['xpMax'] as int,
       avatarFrame: json['avatarFrame'] as String? ?? 'basic',
+      activeAvatarFrameId: json['activeAvatarFrameId'] as String? ?? 'basic',
+      activeVictoryTauntId: json['activeVictoryTauntId'] as String?,
       coins: json['coins'] as int? ?? 0,
       equippedBubbleSkin: json['equippedBubbleSkin'] as String?,
       equippedVictoryTaunt: json['equippedVictoryTaunt'] as String?,
@@ -176,6 +199,9 @@ class UserProfile {
       activeFrameId: json['activeFrameId'] as String? ?? 'default_frame',
       powerUps: Map<String, int>.from(json['powerUps'] as Map? ?? {}),
       unlockedFrames: List<String>.from(json['unlockedFrames'] as List? ?? ['basic', 'default_frame']),
+      stats: json['stats'] != null 
+          ? UserStats.fromJson(json['stats'] as Map<String, dynamic>)
+          : UserStats.initial(),
     );
   }
 
@@ -190,6 +216,8 @@ class UserProfile {
       xp: data['xp'] as int,
       xpMax: data['xpMax'] as int,
       avatarFrame: data['avatarFrame'] as String? ?? 'basic',
+      activeAvatarFrameId: data['activeAvatarFrameId'] as String? ?? 'basic',
+      activeVictoryTauntId: data['activeVictoryTauntId'] as String?,
       coins: data['coins'] as int? ?? 0,
       equippedBubbleSkin: data['equippedBubbleSkin'] as String?,
       equippedVictoryTaunt: data['equippedVictoryTaunt'] as String?,
@@ -203,6 +231,9 @@ class UserProfile {
       activeFrameId: data['activeFrameId'] as String? ?? 'default_frame',
       powerUps: Map<String, int>.from(data['powerUps'] as Map? ?? {}),
       unlockedFrames: List<String>.from(data['unlockedFrames'] as List? ?? ['basic', 'default_frame']),
+      stats: data['stats'] != null 
+          ? UserStats.fromJson(data['stats'] as Map<String, dynamic>)
+          : UserStats.initial(),
     );
   }
 
@@ -225,6 +256,8 @@ class UserProfile {
       xp: 0,
       xpMax: 500,
       avatarFrame: 'basic',
+      activeAvatarFrameId: 'basic',
+      activeVictoryTauntId: null,
       coins: 100,
       hintRefills: 0,
       deviceId: deviceId,
@@ -239,6 +272,7 @@ class UserProfile {
         'hintRefillsCount': 3,
       },
       unlockedFrames: ['basic', 'default_frame'],
+      stats: UserStats.initial(),
     );
   }
 
@@ -252,6 +286,8 @@ class UserProfile {
     int xp = 250,
     int xpMax = 500,
     String avatarFrame = 'basic',
+    String activeAvatarFrameId = 'basic',
+    String? activeVictoryTauntId,
     int coins = 0,
     String? equippedBubbleSkin,
     String? equippedVictoryTaunt,
@@ -265,6 +301,7 @@ class UserProfile {
     String activeFrameId = 'default_frame',
     Map<String, int>? powerUps,
     List<String>? unlockedFrames,
+    UserStats? stats,
   }) {
     return UserProfile(
       userId: userId,
@@ -275,6 +312,8 @@ class UserProfile {
       xp: xp,
       xpMax: xpMax,
       avatarFrame: avatarFrame,
+      activeAvatarFrameId: activeAvatarFrameId,
+      activeVictoryTauntId: activeVictoryTauntId,
       coins: coins,
       equippedBubbleSkin: equippedBubbleSkin,
       equippedVictoryTaunt: equippedVictoryTaunt,
@@ -288,6 +327,69 @@ class UserProfile {
       activeFrameId: activeFrameId,
       powerUps: powerUps ?? {'mindShieldsCount': 0, 'hintRefillsCount': 3},
       unlockedFrames: unlockedFrames ?? ['basic', 'default_frame'],
+      stats: stats ?? UserStats(gamesPlayed: gamesPlayed, gamesWon: gamesPlayed - gamesLosed, currentStreak: streakCount),
     );
   }
+}
+
+/// User statistics model
+class UserStats {
+  final int gamesPlayed;
+  final int gamesWon;
+  final int currentStreak;
+
+  UserStats({
+    required this.gamesPlayed,
+    required this.gamesWon,
+    required this.currentStreak,
+  });
+
+  /// Create a copy with modified fields
+  UserStats copyWith({
+    int? gamesPlayed,
+    int? gamesWon,
+    int? currentStreak,
+  }) {
+    return UserStats(
+      gamesPlayed: gamesPlayed ?? this.gamesPlayed,
+      gamesWon: gamesWon ?? this.gamesWon,
+      currentStreak: currentStreak ?? this.currentStreak,
+    );
+  }
+
+  /// Convert to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'gamesPlayed': gamesPlayed,
+      'gamesWon': gamesWon,
+      'currentStreak': currentStreak,
+    };
+  }
+
+  /// Create from JSON
+  factory UserStats.fromJson(Map<String, dynamic> json) {
+    return UserStats(
+      gamesPlayed: json['gamesPlayed'] as int? ?? 0,
+      gamesWon: json['gamesWon'] as int? ?? 0,
+      currentStreak: json['currentStreak'] as int? ?? 0,
+    );
+  }
+
+  /// Factory for initial stats
+  factory UserStats.initial() {
+    return UserStats(
+      gamesPlayed: 0,
+      gamesWon: 0,
+      currentStreak: 0,
+    );
+  }
+
+  /// Calculate win rate (0.0 to 1.0)
+  double get winRate {
+    if (gamesPlayed == 0) return 0.0;
+    return gamesWon / gamesPlayed;
+  }
+
+  /// Calculate loss count
+  int get gamesLost => gamesPlayed - gamesWon;
 }
