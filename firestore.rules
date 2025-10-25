@@ -1,0 +1,65 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is the document owner
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // ========================================================================
+    // USERS COLLECTION
+    // ========================================================================
+    match /users/{userId} {
+      // Users can read their own document
+      allow read: if isOwner(userId);
+      
+      // Users cannot write directly (Cloud Functions only)
+      allow write: if false;
+    }
+    
+    // ========================================================================
+    // MATCHMAKING QUEUE COLLECTION
+    // ========================================================================
+    match /matchmakingQueue/{docId} {
+      // Users can read their own queue entry
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      
+      // Users can create their own queue entry
+      allow create: if isAuthenticated() 
+                    && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.keys().hasAll(['userId', 'elo', 'joinTime']);
+      
+      // Users cannot update queue entries
+      allow update: if false;
+      
+      // Users cannot delete queue entries (Cloud Functions only)
+      allow delete: if false;
+    }
+    
+    // ========================================================================
+    // GAMES COLLECTION
+    // ========================================================================
+    match /games/{gameId} {
+      // Users can read if they are a player in the game
+      allow read: if isAuthenticated() 
+                  && request.auth.uid in resource.data.playerIds;
+      
+      // Users cannot write game documents (Cloud Functions only)
+      allow write: if false;
+    }
+    
+    // ========================================================================
+    // DEFAULT DENY ALL OTHER COLLECTIONS
+    // ========================================================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

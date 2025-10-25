@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "yesorno-85a02"
-  }
+    "default": "your-project-id",
+    "staging": "your-project-id-staging",
+    "production": "your-project-id-prod"
+  },
+  "targets": {},
+  "etags": {}
 }
