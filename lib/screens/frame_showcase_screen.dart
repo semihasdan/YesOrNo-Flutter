@@ -175,6 +175,77 @@ class FrameShowcaseScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildDebugInfoCard(dynamic user) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundDark2.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.textSecondary.withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.bug_report, color: AppColors.textSecondary, size: 16),
+              const SizedBox(width: 8),
+              Text(
+                'Debug Info',
+                style: AppTextStyles.subtitle.copyWith(
+                  color: AppColors.textSecondary,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          _buildDebugRow('Avatar Frame', user.avatarFrame),
+          _buildDebugRow('Active Frame ID', user.activeFrameId),
+          _buildDebugRow('Unlocked Count', '${user.unlockedFrames.length}'),
+          _buildDebugRow('Coins', '${user.coins}'),
+          const SizedBox(height: 8),
+          Text(
+            'Unlocked: ${user.unlockedFrames.join(", ")}',
+            style: AppTextStyles.subtitle.copyWith(
+              color: AppColors.textSecondary,
+              fontSize: 10,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDebugRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '$label:',
+            style: AppTextStyles.subtitle.copyWith(
+              color: AppColors.textSecondary,
+              fontSize: 11,
+            ),
+          ),
+          Text(
+            value,
+            style: AppTextStyles.subtitle.copyWith(
+              color: AppColors.primaryCyan,
+              fontSize: 11,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildFrameCard(
     BuildContext context,
     String avatarUrl,
@@ -203,6 +274,7 @@ class FrameShowcaseScreen extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           // Frame Preview
           Stack(
@@ -211,12 +283,12 @@ class FrameShowcaseScreen extends StatelessWidget {
               EquippableAvatarFrame(
                 avatarUrl: avatarUrl,
                 frameId: frameId,
-                radius: 50,
+                radius: 45,
               ),
               if (!isUnlocked)
                 Container(
-                  width: 100,
-                  height: 100,
+                  width: 90,
+                  height: 90,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.black.withOpacity(0.7),
@@ -224,7 +296,7 @@ class FrameShowcaseScreen extends StatelessWidget {
                   child: const Icon(
                     Icons.lock,
                     color: Colors.white,
-                    size: 32,
+                    size: 28,
                   ),
                 ),
               if (isEquipped)
@@ -247,23 +319,25 @@ class FrameShowcaseScreen extends StatelessWidget {
             ],
           ),
           
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           
           // Frame Name
           Text(
             frameName,
             style: AppTextStyles.subtitle.copyWith(
-              fontSize: 12,
+              fontSize: 11,
               fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           
-          const SizedBox(height: 4),
+          const SizedBox(height: 3),
           
           // Rarity Badge
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
             decoration: BoxDecoration(
               color: _getRarityColor(rarity).withOpacity(0.2),
               borderRadius: BorderRadius.circular(8),
@@ -271,13 +345,13 @@ class FrameShowcaseScreen extends StatelessWidget {
             child: Text(
               rarity,
               style: AppTextStyles.subtitle.copyWith(
-                fontSize: 10,
+                fontSize: 9,
                 color: _getRarityColor(rarity),
               ),
             ),
           ),
           
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           
           // Action Button
           if (!isUnlocked && cost > 0)
@@ -302,11 +376,12 @@ class FrameShowcaseScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.tertiaryGold,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                minimumSize: const Size(0, 24),
               ),
               child: Text(
                 '$cost coins',
-                style: const TextStyle(fontSize: 10, color: Colors.black),
+                style: const TextStyle(fontSize: 9, color: Colors.black),
               ),
             )
           else if (isUnlocked && !isEquipped)
@@ -330,23 +405,24 @@ class FrameShowcaseScreen extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryCyan,
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                minimumSize: const Size(0, 24),
               ),
               child: const Text(
                 'Equip',
-                style: TextStyle(fontSize: 10),
+                style: TextStyle(fontSize: 9),
               ),
             )
           else if (isEquipped)
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
               decoration: BoxDecoration(
                 color: AppColors.primaryCyan.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: const Text(
                 'Equipped',
-                style: TextStyle(fontSize: 10, color: AppColors.primaryCyan),
+                style: TextStyle(fontSize: 9, color: AppColors.primaryCyan),
               ),
             ),
         ],
